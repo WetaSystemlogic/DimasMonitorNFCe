@@ -643,10 +643,12 @@ begin
              Prod.qCom     := Modulo.qryVProdutos.FieldByName('quantidade').AsFloat;
              Prod.vUnCom   := Modulo.qryVProdutos.FieldByName('valor').AsFloat;
              //Prod.vProd    := Modulo.qryVProdutos.FieldByName('total').AsFloat;
-             Prod.vProd    := StrToFloat(FormatFloat('#,##0.00', Modulo.qryVProdutos.FieldByName('total').AsFloat));
+             //Prod.vProd    := StrToFloat(FormatFloat('#,##0.00', Modulo.qryVProdutos.FieldByName('total').AsFloat));
+             Prod.vProd    := SimpleRoundTo(Modulo.qryVProdutos.FieldByName('total').AsFloat, -2);
 //             Prod.vProd    := Modulo.qryVProdutos.FieldByName('total').AsFloat;
              //Passar o Valor Total para a variavel de Soma
-             SomaItens  :=  SomaItens + StrToFloat(FormatFloat('#,##0.00', Modulo.qryVProdutos.FieldByName('total').AsFloat));
+             //SomaItens  :=  SomaItens + StrToFloat(FormatFloat('#,##0.00', Modulo.qryVProdutos.FieldByName('total').AsFloat));
+             SomaItens  :=  SomaItens + SimpleRoundTo(Modulo.qryVProdutos.FieldByName('total').AsFloat, -2);
 //             SomaItens  :=  SomaItens + Modulo.qryVProdutos.FieldByName('total').AsFloat;
              //Testar se o Dodigo de Barras tem menos de 13 Digitos se tiver Gerar um Codigo
              if Length(Modulo.qryVProdutos.FieldByName('codigobarras').AsString) < 13 then
@@ -657,15 +659,19 @@ begin
              Prod.qTrib     := Modulo.qryVProdutos.FieldByName('quantidade').AsFloat;
              Prod.vUnTrib   := Modulo.qryVProdutos.FieldByName('valor').AsFloat;
 
-             Prod.vOutro    := StrToFloat(FormatFloat('#,##0.00', Modulo.qryVProdutos.FieldByName('valoroutrasdespesasrateado').AsFloat));
+             //Prod.vOutro    := StrToFloat(FormatFloat('#,##0.00', Modulo.qryVProdutos.FieldByName('valoroutrasdespesasrateado').AsFloat));
+             Prod.vOutro    := SimpleRoundTo(Modulo.qryVProdutos.FieldByName('valoroutrasdespesasrateado').AsFloat, -2);
 //             Prod.vOutro    := Modulo.qryVProdutos.FieldByName('valoroutrasdespesasrateado').AsFloat;
              Prod.vFrete    := 0;
              Prod.vSeg      := 0;
-             Prod.vDesc    := StrToFloat(FormatFloat('#,##0.00', Modulo.qryVProdutos.FieldByName('valordescontorateado').AsFloat));
+             //Prod.vDesc    := StrToFloat(FormatFloat('#,##0.00', Modulo.qryVProdutos.FieldByName('valordescontorateado').AsFloat));
+             Prod.vDesc    := SimpleRoundTo(Modulo.qryVProdutos.FieldByName('valordescontorateado').AsFloat, -2);
 //             Prod.vOutro    := Modulo.qryVProdutos.FieldByName('valoroutrasdespesasrateado').AsFloat;
              //Recebendo o Valor Rateado
-             vDescontoRateado :=  vDescontoRateado +  StrToFloat(FormatFloat('#,##0.00', Modulo.qryVProdutos.FieldByName('valordescontorateado').AsFloat));
-             vOutros  :=  vOutros + StrToFloat(FormatFloat('#,##0.00', Modulo.qryVProdutos.FieldByName('valoroutrasdespesasrateado').AsFloat));
+             //vDescontoRateado :=  vDescontoRateado +  StrToFloat(FormatFloat('#,##0.00', Modulo.qryVProdutos.FieldByName('valordescontorateado').AsFloat));
+             //vOutros  :=  vOutros + StrToFloat(FormatFloat('#,##0.00', Modulo.qryVProdutos.FieldByName('valoroutrasdespesasrateado').AsFloat));
+             vDescontoRateado :=  vDescontoRateado +  SimpleRoundTo(Modulo.qryVProdutos.FieldByName('valordescontorateado').AsFloat, -2);
+             vOutros  :=  vOutros + SimpleRoundTo(Modulo.qryVProdutos.FieldByName('valoroutrasdespesasrateado').AsFloat, -2);
 //             vDescontoRateado :=  vDescontoRateado +  Modulo.qryVProdutos.FieldByName('valordescontorateado').AsFloat;
 //             vOutros  :=  vOutros + Modulo.qryVProdutos.FieldByName('valoroutrasdespesasrateado').AsFloat;
 
