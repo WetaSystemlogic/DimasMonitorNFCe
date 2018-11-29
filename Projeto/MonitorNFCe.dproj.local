@@ -1,23 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2018/02/10 19:22:45.000.383,=C:\Users\HOUSE\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2018/02/10 21:09:34.000.184,C:\Users\HOUSE\Documents\Embarcadero\Studio\Projects\Unit1.pas=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uPrincipal.pas</Transaction>
     <Transaction>2018/02/10 21:09:34.000.184,C:\Users\HOUSE\Documents\Embarcadero\Studio\Projects\Unit1.dfm=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uPrincipal.dfm</Transaction>
     <Transaction>2018/02/10 21:09:44.000.099,C:\Users\HOUSE\Documents\Embarcadero\Studio\Projects\Project1.dproj=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\MonitorNFCe.dproj</Transaction>
-    <Transaction>2018/02/10 21:11:46.000.046,=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit1.pas</Transaction>
-    <Transaction>2018/02/10 21:12:27.000.982,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit1.pas=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uModulo.pas</Transaction>
     <Transaction>2018/02/10 21:12:27.000.982,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit1.dfm=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uModulo.dfm</Transaction>
-    <Transaction>2018/02/11 15:29:29.000.370,=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\ACBr\ufrmStatus.pas</Transaction>
-    <Transaction>2018/02/11 15:29:35.000.793,=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\ACBr\unit2.pas</Transaction>
-    <Transaction>2018/02/11 15:29:35.000.469,=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\ACBr\Unit1.pas</Transaction>
-    <Transaction>2018/02/11 22:48:23.000.083,=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\ConsultaCNPJ\U_Principal.pas</Transaction>
-    <Transaction>2018/02/11 23:15:39.000.366,=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit3.pas</Transaction>
     <Transaction>2018/02/11 23:16:21.000.092,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uConsultaFilial.dfm=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit3.dfm</Transaction>
-    <Transaction>2018/02/11 23:16:21.000.092,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uConsultaFilial.pas=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit3.pas</Transaction>
-    <Transaction>2018/02/16 03:14:29.000.722,=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit3.pas</Transaction>
     <Transaction>2018/02/16 03:15:03.000.961,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit3.pas=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uThreadNFCe.pas</Transaction>
-    <Transaction>2018/02/18 19:34:50.000.408,=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit3.pas</Transaction>
-    <Transaction>2018/02/18 19:35:15.000.268,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uThreadStatus.pas=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit3.pas</Transaction>
   </Transactions>
 </BorlandProject>

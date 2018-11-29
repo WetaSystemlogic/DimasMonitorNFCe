@@ -544,4 +544,25 @@ object Modulo: TModulo
     Left = 456
     Top = 176
   end
+  object OpenDialog: TOpenDialog
+    Left = 248
+    Top = 224
+  end
+  object QEmpresa: TFDQuery
+    Connection = ConexaoPDV
+    SQL.Strings = (
+      'select * from empresas')
+    Left = 352
+    Top = 240
+  end
+  object FDGUIxWaitCursor: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 424
+    Top = 248
+  end
+  object DSEmpresa: TDataSource
+    DataSet = QEmpresa
+    Left = 240
+    Top = 280
+  end
 end

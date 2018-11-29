@@ -10,7 +10,8 @@ uses
   U_Principal in '..\ConsultaCNPJ\U_Principal.pas' {F_Principal},
   uConsultaFilial in '..\Fonte\uConsultaFilial.pas' {frmConsultaFilial},
   uThreadNFCe in '..\Fonte\uThreadNFCe.pas',
-  uThreadStatus in '..\Fonte\uThreadStatus.pas';
+  uThreadStatus in '..\Fonte\uThreadStatus.pas',
+  USomaXML in '..\Fonte\USomaXML.pas' {frmSomaXML};
 
 {$R *.res}
 
@@ -19,10 +20,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TModulo, Modulo);
-  Application.CreateForm(TfrmStatus, frmStatus);
-  Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TfrSelecionarCertificado, frSelecionarCertificado);
-  Application.CreateForm(TF_Principal, F_Principal);
-  Application.CreateForm(TfrmConsultaFilial, frmConsultaFilial);
   Application.Run;
 end.

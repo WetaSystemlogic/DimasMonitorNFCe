@@ -9,7 +9,8 @@ uses
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client,
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
   FireDAC.Comp.DataSet, ACBrBase, ACBrDFe, ACBrNFe, ACBrNFeDANFEFRDM,
-  ACBrNFeDANFEClass, ACBrNFeDANFEFR, ACBrMail, Vcl.Dialogs, frxClass, frxDBSet;
+  ACBrNFeDANFEClass, ACBrNFeDANFEFR, ACBrMail, Vcl.Dialogs, frxClass, frxDBSet,
+  FireDAC.Comp.UI;
 
 type
   TModulo = class(TDataModule)
@@ -34,11 +35,16 @@ type
     dbRelVendaItens: TfrxDBDataset;
     qryRelatorioCFOP: TFDQuery;
     frxdbRelVendaCFOP: TfrxDBDataset;
+    OpenDialog: TOpenDialog;
+    QEmpresa: TFDQuery;
+    FDGUIxWaitCursor: TFDGUIxWaitCursor;
+    DSEmpresa: TDataSource;
     procedure dsVendasDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
   public
     { Public declarations }
+    iCaminhoRel: string;
   end;
 
 var

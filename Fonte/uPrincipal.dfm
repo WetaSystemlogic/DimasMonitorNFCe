@@ -4,7 +4,7 @@ object frmPrincipal: TfrmPrincipal
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Monitor NFCe'
-  ClientHeight = 491
+  ClientHeight = 570
   ClientWidth = 911
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -621,7 +621,7 @@ object frmPrincipal: TfrmPrincipal
     Left = 0
     Top = 88
     Width = 911
-    Height = 380
+    Height = 459
     Align = alClient
     TabFont.Charset = DEFAULT_CHARSET
     TabFont.Color = clBtnText
@@ -630,15 +630,17 @@ object frmPrincipal: TfrmPrincipal
     TabFont.Style = []
     TabOrder = 1
     OnClick = tnPrincipalClick
+    ExplicitHeight = 380
     object TTabPage
       Left = 4
       Top = 24
       Caption = 'Notas'
+      ExplicitHeight = 352
       object tnVendas: TTabbedNotebook
         Left = 0
         Top = 0
         Width = 903
-        Height = 352
+        Height = 431
         Align = alClient
         TabFont.Charset = DEFAULT_CHARSET
         TabFont.Color = clBtnText
@@ -646,15 +648,17 @@ object frmPrincipal: TfrmPrincipal
         TabFont.Name = 'Tahoma'
         TabFont.Style = []
         TabOrder = 0
+        ExplicitHeight = 352
         object TTabPage
           Left = 4
           Top = 24
           Caption = 'Vendas'
+          ExplicitHeight = 324
           object dbgVendas: TDBGrid
             Left = 0
             Top = 28
             Width = 895
-            Height = 296
+            Height = 375
             Align = alClient
             DataSource = Modulo.dsVendas
             Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect, dgTitleClick, dgTitleHotTrack]
@@ -1404,11 +1408,12 @@ object frmPrincipal: TfrmPrincipal
           Left = 4
           Top = 24
           Caption = 'Produtos'
+          ExplicitHeight = 324
           object dbgProdutos: TDBGrid
             Left = 0
             Top = 0
             Width = 895
-            Height = 324
+            Height = 403
             Align = alClient
             DataSource = Modulo.dsVProdutos
             Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -1425,15 +1430,17 @@ object frmPrincipal: TfrmPrincipal
           Left = 4
           Top = 24
           Caption = 'Logs'
+          ExplicitHeight = 324
           object MemoLog: TMemo
             Left = 0
             Top = 0
             Width = 895
-            Height = 324
+            Height = 403
             Align = alClient
             ReadOnly = True
             ScrollBars = ssVertical
             TabOrder = 0
+            ExplicitHeight = 324
           end
         end
       end
@@ -1442,6 +1449,7 @@ object frmPrincipal: TfrmPrincipal
       Left = 4
       Top = 24
       Caption = 'Danfe'
+      ExplicitHeight = 352
       object sbtnLogoMarca: TSpeedButton
         Left = 244
         Top = 20
@@ -1739,6 +1747,7 @@ object frmPrincipal: TfrmPrincipal
       Left = 4
       Top = 24
       Caption = 'Email'
+      ExplicitHeight = 352
       object Label1: TLabel
         Left = 4
         Top = 3
@@ -1919,6 +1928,7 @@ object frmPrincipal: TfrmPrincipal
       Left = 4
       Top = 24
       Caption = 'Filtros'
+      ExplicitHeight = 352
       object sbtnGravarFiltros: TSpeedButton
         Left = 3
         Top = 238
@@ -2467,20 +2477,23 @@ object frmPrincipal: TfrmPrincipal
       Left = 4
       Top = 24
       Caption = 'Configura'#231#245'es'
+      ExplicitHeight = 352
       object pnlConfiguracoes: TPanel
         Left = 0
         Top = 0
         Width = 903
-        Height = 352
+        Height = 431
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitHeight = 352
       end
     end
     object TTabPage
       Left = 4
       Top = 24
       Caption = 'Conex'#227'o'
+      ExplicitHeight = 352
       object Label20: TLabel
         Left = 4
         Top = 5
@@ -2612,6 +2625,7 @@ object frmPrincipal: TfrmPrincipal
       Left = 4
       Top = 24
       Caption = 'Contabilidade'
+      ExplicitHeight = 352
       object lbInicial: TLabel
         Left = 9
         Top = 5
@@ -2905,161 +2919,207 @@ object frmPrincipal: TfrmPrincipal
       Left = 4
       Top = 24
       Caption = 'Relat'#243'rio'
-      object gbVendasEnviadas: TGroupBox
-        Left = 3
-        Top = 7
-        Width = 240
-        Height = 174
-        Caption = 'Vendas Enviadas'
+      ExplicitHeight = 352
+      object tnRelatorio: TTabbedNotebook
+        Left = 0
+        Top = 0
+        Width = 903
+        Height = 431
+        Align = alClient
+        TabFont.Charset = DEFAULT_CHARSET
+        TabFont.Color = clBtnText
+        TabFont.Height = -11
+        TabFont.Name = 'Tahoma'
+        TabFont.Style = []
         TabOrder = 0
-        object lblDe: TLabel
-          Left = 5
-          Top = 19
-          Width = 13
-          Height = 13
-          Caption = 'De'
+        ExplicitHeight = 352
+        object TTabPage
+          Left = 4
+          Top = 24
+          Caption = 'Enviados'
+          ExplicitWidth = 292
+          ExplicitHeight = 222
+          object gbVendasEnviadas: TGroupBox
+            Left = 3
+            Top = 7
+            Width = 240
+            Height = 174
+            Caption = 'Vendas Enviadas'
+            TabOrder = 0
+            object lblDe: TLabel
+              Left = 5
+              Top = 19
+              Width = 13
+              Height = 13
+              Caption = 'De'
+            end
+            object lblAte: TLabel
+              Left = 120
+              Top = 21
+              Width = 17
+              Height = 13
+              Caption = 'At'#233
+            end
+            object lblStatus: TLabel
+              Left = 3
+              Top = 87
+              Width = 31
+              Height = 13
+              Caption = 'Status'
+            end
+            object SpeedButton1: TSpeedButton
+              Left = 3
+              Top = 125
+              Width = 91
+              Height = 34
+              Caption = 'Visualisar'
+              Flat = True
+              Glyph.Data = {
+                F6060000424DF606000000000000360000002800000018000000180000000100
+                180000000000C006000000000000000000000000000000000000FFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB5BEC3035C8100
+                5B84FFFFFFFFFFFFFFFFFFFFFFFFFDFDFDFAFAFAF8F8F8F8F8F8F8F8F8F8F8F8
+                F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8FAFAFAFDFDFDB5BE
+                C30C6E8C005B84005B84FFFFFFFFFFFFFFFFFFFDFDFDEDEDEDCECECEB58158B4
+                8056B48055B47F55B47F55B48055B48055B47F55B38056B48056B48056B58158
+                CECECEB4BABA0A5F7A0069910F6287CACACAFFFFFFAAABAB7171716E6F6F5B5B
+                5B333333B18057F3DEC5F4DEC5F3DDC5F3DEC5F4DDC5F4DEC5F3DEC5F4DEC5F3
+                DDC5F3DEC7B27F572A2A2A0A34480053770788B176797BFFFFFFFFFFFF686868
+                6162625E5F5F4849491B1B1BB38158F9EADAF8EADAF8EADAF8E9DAF8EADAF8EA
+                DAF2E4D4E4D6C7EDE0D1F8E9DAB381580053770053770685AE414B4F646565FF
+                FFFFFFFFFF8E8F8F878888838484636464232323B4845BFBF1E7FBF2E7FBF1E7
+                FBF1E7E6DDD5A088749A6C448E5F36A773459991766A6348003E4E042A3D5A62
+                658788888B8C8CFFFFFFFFFFFF9494958D8D8E89898A69696A272727B6875FFB
+                F2E7FBF1E7FBF1E7DED6CCCFA06CF0DCC0F4E6D1F7ECDCF5E7D8F3E2CBE4CDAE
+                23493E68686989898A8D8D8E919192FFFFFFFFFFFF9B9B9C9595969292937878
+                7943434429292A2626272626272626276D492BFCF9F5FCF8F4FFFFFFFFFFFFFF
+                FFFFFEFBF8FCF8F4A48C6676767792929395959699999AFFFFFFFFFFFFA9A9AA
+                A4A4A5A3A3A49898998484857A7A7B7979797979796C6B6BDBBB94F7EDDFFFFE
+                FCFFFEFCFFFFFFFFFFFFFFFFFFF9F4EAF7EDDF7C7975A3A3A4A4A4A5A7A7A8FF
+                FFFFFFFFFFBCBCBCB8B8B8B8B8B8B7B7B7B4B4B4B3B3B3B3B3B3B3B3B3979390
+                E0BB8CF5E7D6FFFFFFFEFBF8FEFBF8FEFBF8FCF8F4FCF7F1F1DFC4948579B8B8
+                B8B8B8B8BBBBBBFFFFFFFFFFFFCFCFCFCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+                CCCCCCCCCCA9A5A1D3A46CEEDABCF7ECDCF7ECDCF8EEE1F7EDDFF9F3E7F8F0E3
+                E2C093A19287EAEAEAEAEAEACECECEFFFFFFFFFFFFDDDDDDDADADADADADADADA
+                DA3F3F3F3F3F3F3F3F3F3F3F3F3A3A3AAF7E49D4A66EE5C399E9CFA8EEDABCF5
+                E9D8F7EADAE7CBA3CF9E65B1AEACC4C4C4C4C4C5DCDCDCFFFFFFFFFFFFE0E0E0
+                DEDEDEDEDEDEDEDEDE494949626262747474909090B0B0B09C8A7EB57E43C791
+                56D4A66EE6C79DF0DBBFDEB785BD864A74553BDEDEDE8B8C8B8B8B8BE0E0E0FF
+                FFFFFFFFFFD0D0D0CDCDCDCDCDCDCDCDCD535454626262757574909090B0B0B0
+                CECECFAD9785AB723BB37A40BD874BBD864AAE743B8263494F4F50CDCDCDCDCD
+                CDCDCDCDCFCFCFFFFFFFFFFFFF9797977070707070706F6F6F5E5E5E5E5D5E5D
+                5D5D5E5E5E5E5E5E5E5E5E5E5E5E605B587E6A568A6A4A856F58665F5A5E5E5E
+                5E5E5E6F6F6F7070707070708E8E8EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9090
+                90777777CDA882F6EDE6F5EEE6F6EDE7F5EEE7F6EEE7F6EDE7F6EEE7F5EEE6F6
+                EDE7F5EEE6CDA782777777909090FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFF8C8C8C7A7A7ACFAB86F4EDE5F4EDE6F4EDE5F4EDE5F5EDE5F4ED
+                E6F4EDE6F5EDE5F4EDE6F5EDE6CFAA867A7A7A8C8C8CFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFF8A8A8A7C7B7CD1AD89F4ECE5F4ECE4F4ECE5
+                F4ECE5F4ECE5F4ECE4F4ECE5F4ECE4F4ECE4F4ECE4D1AD897C7B7C8A8A8AFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8888887C7C7CD3B08CF3
+                EBE3F3EBE3F3EBE3F3EBE4F4EBE4F3ECE4F4ECE3F3EBE4F3EBE3F4EBE3D3B18C
+                7C7C7C888888FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9393
+                937C7C7CD4B38FF1E9E0F2E9DFF2E9E0F2E9DFF2E8DFF2E9DFF2E9DFF1E9E0F2
+                E9E0F2E9DFD5B38F7C7C7C939393FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF9F9F9868686D5B591EFE3D5F0E3D5F0E3D5EFE3D5EFE3D5EFE3
+                D5F0E3D6EFE3D5F0E3D6F0E3D5D6B691868686F9F9F9FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6F6F6D9BA96EEDFCDEEDFCDEEDFCD
+                EEDFCDEEDFCDEEDECEEEDFCDEEDFCDEEDFCEEEDFCED9BB96F6F6F6FFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDBBC99DA
+                BA96DABA96DABA96DABA96DABA96DABA96DABA96DABA96DABA96DABA96DBBC99
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+              OnClick = SpeedButton1Click
+            end
+            object Label23: TLabel
+              Left = 3
+              Top = 47
+              Width = 81
+              Height = 13
+              Caption = 'Tipo de Relat'#243'rio'
+            end
+            object dtVIni: TDateTimePicker
+              Left = 21
+              Top = 15
+              Width = 93
+              Height = 21
+              Date = 43214.338251631950000000
+              Time = 43214.338251631950000000
+              TabOrder = 0
+            end
+            object dtVFim: TDateTimePicker
+              Left = 140
+              Top = 15
+              Width = 93
+              Height = 21
+              Date = 43214.338251631950000000
+              Time = 43214.338251631950000000
+              TabOrder = 1
+            end
+            object cbStatus: TComboBox
+              Left = 3
+              Top = 103
+              Width = 109
+              Height = 21
+              Style = csDropDownList
+              ItemIndex = 0
+              TabOrder = 2
+              Text = 'ENVIADO'
+              Items.Strings = (
+                'ENVIADO'
+                'PENDENTE'
+                'ERRO'
+                'TODOS')
+            end
+            object cbTipoRelatorio: TComboBox
+              Left = 3
+              Top = 64
+              Width = 109
+              Height = 21
+              Style = csDropDownList
+              ItemIndex = 0
+              TabOrder = 3
+              Text = 'RESUMIDO'
+              OnChange = cbTipoRelatorioChange
+              Items.Strings = (
+                'RESUMIDO'
+                'COMPLETO'
+                'CFOP')
+            end
+          end
         end
-        object lblAte: TLabel
-          Left = 120
-          Top = 21
-          Width = 17
-          Height = 13
-          Caption = 'At'#233
-        end
-        object lblStatus: TLabel
-          Left = 3
-          Top = 87
-          Width = 31
-          Height = 13
-          Caption = 'Status'
-        end
-        object SpeedButton1: TSpeedButton
-          Left = 3
-          Top = 125
-          Width = 91
-          Height = 34
-          Caption = 'Visualisar'
-          Flat = True
-          Glyph.Data = {
-            F6060000424DF606000000000000360000002800000018000000180000000100
-            180000000000C006000000000000000000000000000000000000FFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB5BEC3035C8100
-            5B84FFFFFFFFFFFFFFFFFFFFFFFFFDFDFDFAFAFAF8F8F8F8F8F8F8F8F8F8F8F8
-            F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8F8FAFAFAFDFDFDB5BE
-            C30C6E8C005B84005B84FFFFFFFFFFFFFFFFFFFDFDFDEDEDEDCECECEB58158B4
-            8056B48055B47F55B47F55B48055B48055B47F55B38056B48056B48056B58158
-            CECECEB4BABA0A5F7A0069910F6287CACACAFFFFFFAAABAB7171716E6F6F5B5B
-            5B333333B18057F3DEC5F4DEC5F3DDC5F3DEC5F4DDC5F4DEC5F3DEC5F4DEC5F3
-            DDC5F3DEC7B27F572A2A2A0A34480053770788B176797BFFFFFFFFFFFF686868
-            6162625E5F5F4849491B1B1BB38158F9EADAF8EADAF8EADAF8E9DAF8EADAF8EA
-            DAF2E4D4E4D6C7EDE0D1F8E9DAB381580053770053770685AE414B4F646565FF
-            FFFFFFFFFF8E8F8F878888838484636464232323B4845BFBF1E7FBF2E7FBF1E7
-            FBF1E7E6DDD5A088749A6C448E5F36A773459991766A6348003E4E042A3D5A62
-            658788888B8C8CFFFFFFFFFFFF9494958D8D8E89898A69696A272727B6875FFB
-            F2E7FBF1E7FBF1E7DED6CCCFA06CF0DCC0F4E6D1F7ECDCF5E7D8F3E2CBE4CDAE
-            23493E68686989898A8D8D8E919192FFFFFFFFFFFF9B9B9C9595969292937878
-            7943434429292A2626272626272626276D492BFCF9F5FCF8F4FFFFFFFFFFFFFF
-            FFFFFEFBF8FCF8F4A48C6676767792929395959699999AFFFFFFFFFFFFA9A9AA
-            A4A4A5A3A3A49898998484857A7A7B7979797979796C6B6BDBBB94F7EDDFFFFE
-            FCFFFEFCFFFFFFFFFFFFFFFFFFF9F4EAF7EDDF7C7975A3A3A4A4A4A5A7A7A8FF
-            FFFFFFFFFFBCBCBCB8B8B8B8B8B8B7B7B7B4B4B4B3B3B3B3B3B3B3B3B3979390
-            E0BB8CF5E7D6FFFFFFFEFBF8FEFBF8FEFBF8FCF8F4FCF7F1F1DFC4948579B8B8
-            B8B8B8B8BBBBBBFFFFFFFFFFFFCFCFCFCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-            CCCCCCCCCCA9A5A1D3A46CEEDABCF7ECDCF7ECDCF8EEE1F7EDDFF9F3E7F8F0E3
-            E2C093A19287EAEAEAEAEAEACECECEFFFFFFFFFFFFDDDDDDDADADADADADADADA
-            DA3F3F3F3F3F3F3F3F3F3F3F3F3A3A3AAF7E49D4A66EE5C399E9CFA8EEDABCF5
-            E9D8F7EADAE7CBA3CF9E65B1AEACC4C4C4C4C4C5DCDCDCFFFFFFFFFFFFE0E0E0
-            DEDEDEDEDEDEDEDEDE494949626262747474909090B0B0B09C8A7EB57E43C791
-            56D4A66EE6C79DF0DBBFDEB785BD864A74553BDEDEDE8B8C8B8B8B8BE0E0E0FF
-            FFFFFFFFFFD0D0D0CDCDCDCDCDCDCDCDCD535454626262757574909090B0B0B0
-            CECECFAD9785AB723BB37A40BD874BBD864AAE743B8263494F4F50CDCDCDCDCD
-            CDCDCDCDCFCFCFFFFFFFFFFFFF9797977070707070706F6F6F5E5E5E5E5D5E5D
-            5D5D5E5E5E5E5E5E5E5E5E5E5E5E605B587E6A568A6A4A856F58665F5A5E5E5E
-            5E5E5E6F6F6F7070707070708E8E8EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9090
-            90777777CDA882F6EDE6F5EEE6F6EDE7F5EEE7F6EEE7F6EDE7F6EEE7F5EEE6F6
-            EDE7F5EEE6CDA782777777909090FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFF8C8C8C7A7A7ACFAB86F4EDE5F4EDE6F4EDE5F4EDE5F5EDE5F4ED
-            E6F4EDE6F5EDE5F4EDE6F5EDE6CFAA867A7A7A8C8C8CFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFF8A8A8A7C7B7CD1AD89F4ECE5F4ECE4F4ECE5
-            F4ECE5F4ECE5F4ECE4F4ECE5F4ECE4F4ECE4F4ECE4D1AD897C7B7C8A8A8AFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8888887C7C7CD3B08CF3
-            EBE3F3EBE3F3EBE3F3EBE4F4EBE4F3ECE4F4ECE3F3EBE4F3EBE3F4EBE3D3B18C
-            7C7C7C888888FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9393
-            937C7C7CD4B38FF1E9E0F2E9DFF2E9E0F2E9DFF2E8DFF2E9DFF2E9DFF1E9E0F2
-            E9E0F2E9DFD5B38F7C7C7C939393FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFF9F9F9868686D5B591EFE3D5F0E3D5F0E3D5EFE3D5EFE3D5EFE3
-            D5F0E3D6EFE3D5F0E3D6F0E3D5D6B691868686F9F9F9FFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6F6F6D9BA96EEDFCDEEDFCDEEDFCD
-            EEDFCDEEDFCDEEDECEEEDFCDEEDFCDEEDFCEEEDFCED9BB96F6F6F6FFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDBBC99DA
-            BA96DABA96DABA96DABA96DABA96DABA96DABA96DABA96DABA96DABA96DBBC99
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-          OnClick = SpeedButton1Click
-        end
-        object Label23: TLabel
-          Left = 3
-          Top = 47
-          Width = 81
-          Height = 13
-          Caption = 'Tipo de Relat'#243'rio'
-        end
-        object dtVIni: TDateTimePicker
-          Left = 21
-          Top = 15
-          Width = 93
-          Height = 21
-          Date = 43214.338251631950000000
-          Time = 43214.338251631950000000
-          TabOrder = 0
-        end
-        object dtVFim: TDateTimePicker
-          Left = 140
-          Top = 15
-          Width = 93
-          Height = 21
-          Date = 43214.338251631950000000
-          Time = 43214.338251631950000000
-          TabOrder = 1
-        end
-        object cbStatus: TComboBox
-          Left = 3
-          Top = 103
-          Width = 109
-          Height = 21
-          Style = csDropDownList
-          ItemIndex = 0
-          TabOrder = 2
-          Text = 'ENVIADO'
-          Items.Strings = (
-            'ENVIADO'
-            'PENDENTE'
-            'ERRO'
-            'TODOS')
-        end
-        object cbTipoRelatorio: TComboBox
-          Left = 3
-          Top = 64
-          Width = 109
-          Height = 21
-          Style = csDropDownList
-          ItemIndex = 0
-          TabOrder = 3
-          Text = 'RESUMIDO'
-          OnChange = cbTipoRelatorioChange
-          Items.Strings = (
-            'RESUMIDO'
-            'COMPLETO'
-            'CFOP')
+        object TTabPage
+          Left = 4
+          Top = 24
+          Caption = 'SomaXML'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
+          object pnlSomaXML: TPanel
+            Left = 0
+            Top = 0
+            Width = 895
+            Height = 403
+            Align = alClient
+            BevelOuter = bvNone
+            Color = clWhite
+            ParentBackground = False
+            TabOrder = 0
+            ExplicitLeft = 168
+            ExplicitTop = 72
+            ExplicitWidth = 185
+            ExplicitHeight = 41
+          end
         end
       end
     end
   end
   object StatusBar: TStatusBar
     Left = 0
-    Top = 468
+    Top = 547
     Width = 911
     Height = 23
     Panels = <
@@ -3084,6 +3144,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 100
       end>
     PopupMenu = MenuPrincipal
+    ExplicitTop = 468
   end
   object pnlData: TPanel
     Left = 0

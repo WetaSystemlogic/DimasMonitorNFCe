@@ -156,18 +156,20 @@ type
     Mostrar: TMenuItem;
     MenuPrincipal: TPopupMenu;
     Atualizar: TMenuItem;
+    edt_AssinaturaEmail: TEdit;
+    Label24: TLabel;
+    tnRelatorio: TTabbedNotebook;
     gbVendasEnviadas: TGroupBox;
-    dtVIni: TDateTimePicker;
-    dtVFim: TDateTimePicker;
     lblDe: TLabel;
     lblAte: TLabel;
-    cbStatus: TComboBox;
     lblStatus: TLabel;
     SpeedButton1: TSpeedButton;
     Label23: TLabel;
+    dtVIni: TDateTimePicker;
+    dtVFim: TDateTimePicker;
+    cbStatus: TComboBox;
     cbTipoRelatorio: TComboBox;
-    edt_AssinaturaEmail: TEdit;
-    Label24: TLabel;
+    pnlSomaXML: TPanel;
     procedure sbtnAtualizarClick(Sender: TObject);
     procedure tnPrincipalClick(Sender: TObject);
     procedure dbgVendasDblClick(Sender: TObject);
@@ -254,7 +256,7 @@ implementation
 {$R *.dfm}
 
 uses uModulo, ufrmStatus, Unit1, unit2, U_Principal, pcnConversaoNFe,
-  uThreadNFCe, uThreadStatus;
+  uThreadNFCe, uThreadStatus, USomaXML;
 
 procedure TfrmPrincipal.Abortar1Click(Sender: TObject);
 var
@@ -1104,6 +1106,7 @@ end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  Action  :=  caFree;
   Application.Terminate;
 end;
 
@@ -1192,6 +1195,10 @@ begin
     Form1 :=  TForm1.Create(Self);
     Form1.Parent  := pnlConfiguracoes;
     Form1.Show;
+    //Mostrar o Form do Soma XML no Panel Soma XML
+    frmSomaXML  :=  TfrmSomaXML.Create(Self);
+    frmSomaXML.Parent :=  pnlSomaXML;
+    frmSomaXML.Show;
 
     //Passar Data para os Edits de Data do Mes
     //dtpInicio.Date  :=  StartOfTheMonth(Now);
@@ -1314,12 +1321,18 @@ begin
     Ini.Free;
   end;
 
+  //Caminho Relatorio
+  Modulo.iCaminhoRel  :=  ExtractFilePath(Application.ExeName) + 'Rel';
+
   //Atualizar Grid
   sbtnAtualizar.Click;
 
   //Iniciar minimizado
-  if TimerMinimizar <> nil then  
-  TimerMinimizar.Enabled  :=  True;
+  if TimerMinimizar <> nil then
+  begin
+    //TimerMinimizarTimer(nil);
+    TimerMinimizar.Enabled  :=  True;
+  end;
 
 end;
 

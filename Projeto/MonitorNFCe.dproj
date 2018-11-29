@@ -131,6 +131,10 @@
         </DCCReference>
         <DCCReference Include="..\Fonte\uThreadNFCe.pas"/>
         <DCCReference Include="..\Fonte\uThreadStatus.pas"/>
+        <DCCReference Include="..\Fonte\USomaXML.pas">
+            <Form>frmSomaXML</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -156,7 +160,6 @@
                     <Excluded_Packages Name="$(BDSBIN)\bcbofficexp240.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k240.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp240.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Users\HOUSE\AppData\Roaming\IntraWeb XIV\Bin\dclIntraweb_14_D10_1.bpl">IntraWeb 14.0 Design Package for RAD Studio 10.1 Berlin</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
