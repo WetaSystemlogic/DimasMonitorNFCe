@@ -1056,6 +1056,8 @@ begin
     Modulo.qryAux.SQL.Add('updatev = :updatev,');
     Modulo.qryAux.SQL.Add('caminhoxml = :caminhoxml,');
     //Modulo.qryAux.SQL.Add('xml = :xml,'); --Nao Usar Salvando no Banco
+    //Passar o Protocolo para Veracidade da Nota
+    Modulo.qryAux.SQL.Add('num_protocolo = :num_protocolo,');
     Modulo.qryAux.SQL.Add('statusnf = :statusnf');
     Modulo.qryAux.SQL.Add('where codigo = :codigo');
     Modulo.qryAux.ParamByName('chave').AsString        := Copy(Form1.ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID, 4, 100);
@@ -1069,6 +1071,7 @@ begin
       Modulo.qryAux.ParamByName('modelo').AsString   := '65';
       Modulo.qryAux.ParamByName('serie').AsString   := SERIENOTAFISCALMANUALPADRAO;
       Modulo.qryAux.ParamByName('updatev').AsString   := 'N';
+      Modulo.qryAux.ParamByName('num_protocolo').AsString   := Form1.ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.nProt;
       //Modulo.qryAux.ParamByName('xml').LoadFromFile(CaminhoXML,ftBlob); --Nao Usar Salvando no banco
       //Criar pasta se nao Existir
       if not DirectoryExists(Caminho) then
@@ -2147,7 +2150,7 @@ begin
               end
               else
               begin
-                qryRelatorioResumo.SQL.Add('(statusnf = :status)');
+                qryRelatorioResumo.SQL.Add('(statusnf = :status) and (CHARACTER_LENGTH(num_protocolo) > 3)');
               end;
               qryRelatorioResumo.ParamByName('status').AsString := cbStatus.Text;
             end;
@@ -2161,7 +2164,7 @@ begin
             RelVendas.ShowReport();
           end;
        end;
-    1: begin //Relatorio Resumido
+    1: begin //Relatorio COMPLETO
           //Buscar Resultados
           with Modulo do
           begin
@@ -2181,7 +2184,7 @@ begin
               end
               else
               begin
-                qryRelatorio.SQL.Add('(V.statusnf = :status)');
+                qryRelatorio.SQL.Add('(V.statusnf = :status) and (CHARACTER_LENGTH(num_protocolo) > 3)');
               end;
               qryRelatorio.ParamByName('status').AsString := cbStatus.Text;
             end;
@@ -2190,6 +2193,43 @@ begin
             qryRelatorio.ParamByName('fim').AsDate      := dtVFim.Date;
             qryRelatorio.Open();
             //Consulta Itens Vendas
+            qryRelatorioItens.Close;
+            qryRelatorioItens.SQL.Clear;
+            qryRelatorioItens.SQL.Add(
+            'select ' +
+            'I.venda VENDA,' +
+            'I.produto CODPRODUTO,' +
+            'I.descricao DESCRICAO,' +
+            'I.quantidade QUANTIDADE,' +
+            'I.valor VALORUND,' +
+            'I.total TOTAL,' +
+            'I.cst cstring,' +
+            'I.cfop CFOPPRODUTO,' +
+            'I.percentualicms PERCENTUALICMS,' +
+            'I.valoricms VALORICMSPRODUTO,' +
+            'I.valordesconto VALORDESCONTOPRODUTO ' +
+            'from ' +
+            'itensvendas I, produtos, classificacoesfiscais, itensclassificacoesfiscais, filiais ' +
+            'where ' +
+            '( ' +
+            'I.filial  =   filiais.codigo and ' +
+            'I.produto =   produtos.codigo and ' +
+            'produtos.classificacaofiscal    =   classificacoesfiscais.codigo and ' +
+            'produtos.classificacaofiscal    =   itensclassificacoesfiscais.classificacaofiscal ' +
+            ') ' +
+            'and ' +
+            '( ' +
+            'I.situacao = ''N'' and ' +
+            'itensclassificacoesfiscais.uf = filiais.uf and ' +
+            'I.cfop = itensclassificacoesfiscais.cfop and ' +
+            'I.cst = itensclassificacoesfiscais.cst and ' +
+            'itensclassificacoesfiscais.tipo = ''S'' ' +
+            ') '
+            );
+            qryRelatorioItens.Open();
+
+            {$REGION 'Forma Anterior de Consulta de Itens'}
+            {
             qryRelatorioItens.Close;
             qryRelatorioItens.SQL.Clear;
             qryRelatorioItens.SQL.Add('SELECT');
@@ -2206,6 +2246,8 @@ begin
             qryRelatorioItens.SQL.Add('I.valordesconto VALORDESCONTOPRODUTO');
             qryRelatorioItens.SQL.Add('FROM ITENSVENDAS I');
             qryRelatorioItens.Open();
+            }
+            {$ENDREGION}
             //Chamar Relatorio
             RelVendas.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Rel\VENDAS.fr3');
             RelVendas.ShowReport();

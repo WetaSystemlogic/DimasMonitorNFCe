@@ -2178,7 +2178,9 @@ object Form1: TForm1
     Configuracoes.Geral.SSLHttpLib = httpNone
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.VersaoQRCode = veqr000
+    Configuracoes.Geral.ModeloDF = moNFCe
+    Configuracoes.Geral.VersaoDF = ve400
+    Configuracoes.Geral.VersaoQRCode = veqr200
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0

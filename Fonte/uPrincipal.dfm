@@ -630,12 +630,10 @@ object frmPrincipal: TfrmPrincipal
     TabFont.Style = []
     TabOrder = 1
     OnClick = tnPrincipalClick
-    ExplicitHeight = 380
     object TTabPage
       Left = 4
       Top = 24
       Caption = 'Notas'
-      ExplicitHeight = 352
       object tnVendas: TTabbedNotebook
         Left = 0
         Top = 0
@@ -648,12 +646,10 @@ object frmPrincipal: TfrmPrincipal
         TabFont.Name = 'Tahoma'
         TabFont.Style = []
         TabOrder = 0
-        ExplicitHeight = 352
         object TTabPage
           Left = 4
           Top = 24
           Caption = 'Vendas'
-          ExplicitHeight = 324
           object dbgVendas: TDBGrid
             Left = 0
             Top = 28
@@ -1408,7 +1404,6 @@ object frmPrincipal: TfrmPrincipal
           Left = 4
           Top = 24
           Caption = 'Produtos'
-          ExplicitHeight = 324
           object dbgProdutos: TDBGrid
             Left = 0
             Top = 0
@@ -1430,7 +1425,6 @@ object frmPrincipal: TfrmPrincipal
           Left = 4
           Top = 24
           Caption = 'Logs'
-          ExplicitHeight = 324
           object MemoLog: TMemo
             Left = 0
             Top = 0
@@ -1440,7 +1434,6 @@ object frmPrincipal: TfrmPrincipal
             ReadOnly = True
             ScrollBars = ssVertical
             TabOrder = 0
-            ExplicitHeight = 324
           end
         end
       end
@@ -1449,7 +1442,6 @@ object frmPrincipal: TfrmPrincipal
       Left = 4
       Top = 24
       Caption = 'Danfe'
-      ExplicitHeight = 352
       object sbtnLogoMarca: TSpeedButton
         Left = 244
         Top = 20
@@ -1747,7 +1739,6 @@ object frmPrincipal: TfrmPrincipal
       Left = 4
       Top = 24
       Caption = 'Email'
-      ExplicitHeight = 352
       object Label1: TLabel
         Left = 4
         Top = 3
@@ -1928,7 +1919,6 @@ object frmPrincipal: TfrmPrincipal
       Left = 4
       Top = 24
       Caption = 'Filtros'
-      ExplicitHeight = 352
       object sbtnGravarFiltros: TSpeedButton
         Left = 3
         Top = 238
@@ -2477,7 +2467,6 @@ object frmPrincipal: TfrmPrincipal
       Left = 4
       Top = 24
       Caption = 'Configura'#231#245'es'
-      ExplicitHeight = 352
       object pnlConfiguracoes: TPanel
         Left = 0
         Top = 0
@@ -2486,14 +2475,12 @@ object frmPrincipal: TfrmPrincipal
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitHeight = 352
       end
     end
     object TTabPage
       Left = 4
       Top = 24
       Caption = 'Conex'#227'o'
-      ExplicitHeight = 352
       object Label20: TLabel
         Left = 4
         Top = 5
@@ -2625,7 +2612,6 @@ object frmPrincipal: TfrmPrincipal
       Left = 4
       Top = 24
       Caption = 'Contabilidade'
-      ExplicitHeight = 352
       object lbInicial: TLabel
         Left = 9
         Top = 5
@@ -2919,7 +2905,6 @@ object frmPrincipal: TfrmPrincipal
       Left = 4
       Top = 24
       Caption = 'Relat'#243'rio'
-      ExplicitHeight = 352
       object tnRelatorio: TTabbedNotebook
         Left = 0
         Top = 0
@@ -2932,13 +2917,10 @@ object frmPrincipal: TfrmPrincipal
         TabFont.Name = 'Tahoma'
         TabFont.Style = []
         TabOrder = 0
-        ExplicitHeight = 352
         object TTabPage
           Left = 4
           Top = 24
           Caption = 'Enviados'
-          ExplicitWidth = 292
-          ExplicitHeight = 222
           object gbVendasEnviadas: TGroupBox
             Left = 3
             Top = 7
@@ -3094,10 +3076,6 @@ object frmPrincipal: TfrmPrincipal
           Left = 4
           Top = 24
           Caption = 'SomaXML'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object pnlSomaXML: TPanel
             Left = 0
             Top = 0
@@ -3108,10 +3086,6 @@ object frmPrincipal: TfrmPrincipal
             Color = clWhite
             ParentBackground = False
             TabOrder = 0
-            ExplicitLeft = 168
-            ExplicitTop = 72
-            ExplicitWidth = 185
-            ExplicitHeight = 41
           end
         end
       end
@@ -3144,7 +3118,6 @@ object frmPrincipal: TfrmPrincipal
         Width = 100
       end>
     PopupMenu = MenuPrincipal
-    ExplicitTop = 468
   end
   object pnlData: TPanel
     Left = 0

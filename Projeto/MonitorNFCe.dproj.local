@@ -1,10 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2018/02/10 21:09:34.000.184,C:\Users\HOUSE\Documents\Embarcadero\Studio\Projects\Unit1.dfm=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uPrincipal.dfm</Transaction>
-    <Transaction>2018/02/10 21:09:44.000.099,C:\Users\HOUSE\Documents\Embarcadero\Studio\Projects\Project1.dproj=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\MonitorNFCe.dproj</Transaction>
-    <Transaction>2018/02/10 21:12:27.000.982,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit1.dfm=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uModulo.dfm</Transaction>
-    <Transaction>2018/02/11 23:16:21.000.092,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uConsultaFilial.dfm=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit3.dfm</Transaction>
-    <Transaction>2018/02/16 03:15:03.000.961,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit3.pas=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uThreadNFCe.pas</Transaction>
+    <Transaction>2018/02/10 21:09:34.000.184,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uPrincipal.dfm=C:\Users\HOUSE\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2018/02/10 21:09:44.000.099,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\MonitorNFCe.dproj=C:\Users\HOUSE\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2018/02/10 21:12:27.000.982,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uModulo.dfm=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit1.dfm</Transaction>
+    <Transaction>2018/02/11 23:16:21.000.092,D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Projeto\Unit3.dfm=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Fonte\uConsultaFilial.dfm</Transaction>
   </Transactions>
 </BorlandProject>

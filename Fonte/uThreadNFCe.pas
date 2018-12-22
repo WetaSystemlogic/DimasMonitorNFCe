@@ -642,6 +642,8 @@ begin
           Modulo.qryAux.SQL.Add('chave = :chave,');
           Modulo.qryAux.SQL.Add('updatev = :updatev,');
           Modulo.qryAux.SQL.Add('caminhoxml = :caminhoxml,');
+          //Passar o Protocolo para Veracidade da Nota
+          Modulo.qryAux.SQL.Add('num_protocolo = :num_protocolo,');
           Modulo.qryAux.SQL.Add('statusnf = :statusnf');
           Modulo.qryAux.SQL.Add('where codigo = :codigo');
           Modulo.qryAux.ParamByName('chave').AsString        := Copy(Form1.ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID, 4, 100);
@@ -655,6 +657,7 @@ begin
             Modulo.qryAux.ParamByName('modelo').AsString   := '65';
             Modulo.qryAux.ParamByName('serie').AsString   := SERIENOTAFISCALMANUALPADRAO;
             Modulo.qryAux.ParamByName('updatev').AsString   := 'N';
+            Modulo.qryAux.ParamByName('num_protocolo').AsString   := Form1.ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.nProt;
             if rgMensagemRetorno.ItemIndex = 0 then begin
               TrayIcon.BalloonTitle :=  'Informação';
               TrayIcon.BalloonHint  :=  'Nota NFCe Gerada com Sucesso!';
