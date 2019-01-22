@@ -12,11 +12,13 @@ object frmPrincipal: TfrmPrincipal
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   PopupMenu = MenuPrincipal
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -646,6 +648,7 @@ object frmPrincipal: TfrmPrincipal
         TabFont.Name = 'Tahoma'
         TabFont.Style = []
         TabOrder = 0
+        OnChange = tnVendasChange
         object TTabPage
           Left = 4
           Top = 24
@@ -3115,7 +3118,11 @@ object frmPrincipal: TfrmPrincipal
       end
       item
         Text = 'Pressione F5 para Atualizar'
-        Width = 100
+        Width = 150
+      end
+      item
+        Text = 'Limpar Logs: CRTL + L'
+        Width = 75
       end>
     PopupMenu = MenuPrincipal
   end

@@ -214,6 +214,9 @@ type
     procedure AtualizarClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure cbTipoRelatorioChange(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure tnVendasChange(Sender: TObject; NewTab: Integer;
+      var AllowChange: Boolean);
   private
     { Private declarations }
   public
@@ -1124,6 +1127,16 @@ begin
   end;
 end;
 
+procedure TfrmPrincipal.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (ssCtrl in Shift) and (Key=Ord('L')) then //Ctrl+L
+    begin
+      if (tnPrincipal.PageIndex = 0) and (tnVendas.PageIndex = 2) then
+        MemoLog.Clear;
+    end;
+end;
+
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 Var IniFile  : String ;
     Ini     : TIniFile ;
@@ -1323,6 +1336,10 @@ begin
   finally
     Ini.Free;
   end;
+
+  //Setar Primeiras Paginas
+  tnPrincipal.PageIndex := 0;
+  tnVendas.PageIndex    := 0;
 
   //Caminho Relatorio
   Modulo.iCaminhoRel  :=  ExtractFilePath(Application.ExeName) + 'Rel';
@@ -2330,6 +2347,13 @@ begin
       DesativarButoes(False);
     end;
   end;
+end;
+
+procedure TfrmPrincipal.tnVendasChange(Sender: TObject; NewTab: Integer;
+  var AllowChange: Boolean);
+begin
+  if (tnVendas.PageIndex = 0) and (tnPrincipal.PageIndex = 0) then
+    SendMessage(MemoLog.Handle, WM_VSCROLL, SB_BOTTOM, 0);
 end;
 
 procedure TfrmPrincipal.TrayIconDblClick(Sender: TObject);
