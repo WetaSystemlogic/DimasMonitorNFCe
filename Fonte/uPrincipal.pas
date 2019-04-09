@@ -170,6 +170,12 @@ type
     cbStatus: TComboBox;
     cbTipoRelatorio: TComboBox;
     pnlSomaXML: TPanel;
+    edtEmailContabilidade: TEdit;
+    Label25: TLabel;
+    pnlAguarde: TPanel;
+    TimerAutoEnvio: TTimer;
+    Label26: TLabel;
+    cbRelContabilidade: TComboBox;
     procedure sbtnAtualizarClick(Sender: TObject);
     procedure tnPrincipalClick(Sender: TObject);
     procedure dbgVendasDblClick(Sender: TObject);
@@ -217,6 +223,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure tnVendasChange(Sender: TObject; NewTab: Integer;
       var AllowChange: Boolean);
+    procedure TimerAutoEnvioTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -226,6 +233,7 @@ type
     function ClrDig(fField : String): String;
     function GetFileList(const Path: string): TStringList;
     function GerarEAN13(Codigo: Integer): string;
+    function EnviarXMLAuto: string;
   end;
 
 var
@@ -253,6 +261,9 @@ var
 
   //Variavel para Impressora
   Impressora: string;
+
+  //Variavel de Teste de Envio Auto de XML
+  AutoEnvio: Boolean;
 
 implementation
 
@@ -294,6 +305,7 @@ begin
   TrayIcon.ShowBalloonHint;
   TimerEnvio.Enabled  := True;
   SairdoLoop :=  False;
+  TimerAutoEnvio.Enabled  :=  False;
 end;
 
 procedure TfrmPrincipal.AtualizarClick(Sender: TObject);
@@ -313,7 +325,7 @@ end;
 
 procedure TfrmPrincipal.cbTipoRelatorioChange(Sender: TObject);
 begin
-  if cbTipoRelatorio.ItemIndex = 2 then
+  if (cbTipoRelatorio.ItemIndex = 2) OR (cbTipoRelatorio.ItemIndex = 3) then
   begin
     cbStatus.ItemIndex  :=  0;
     cbStatus.Enabled    := False;
@@ -1110,6 +1122,350 @@ begin
   end;
 end;
 
+function TfrmPrincipal.EnviarXMLAuto: string;
+var
+  Caminho, Pasta, Para: string;
+  ZipFile: TZipFile;
+  Arquivos, CC: TStringList;
+  I: Integer;
+  IdSSLIOHandlerSocket: TIdSSLIOHandlerSocketOpenSSL;
+  IdSMTP: TIdSMTP;
+  IdMessage: TIdMessage;
+  IdText: TIdText;
+  sAnexo: string;
+  IniFile : String ;
+  Ini     : TIniFile ;
+  sCaminhoPDF: string;
+  procedure ExportaPDF;
+  var
+    iTipoRelatorio: integer;
+  begin
+    //Iniciar Variavel
+    iTipoRelatorio  :=  0;
+    //Buscar Informação no INI
+    iTipoRelatorio  :=  StrToInt(Modulo.LerIni(ChangeFileExt( Application.ExeName, '.ini'),
+                        'Filtro','Relatorio Contabilidade' , '0'));
+    //Caminho do PDF do Rel
+    case iTipoRelatorio of
+      0:  sCaminhoPDF := 'C:\Relatorio Resumido.pdf';
+      1:  sCaminhoPDF := 'C:\Relatorio Completo.pdf';
+      2:  sCaminhoPDF := 'C:\Relatorio CFOP.pdf';
+      3:  sCaminhoPDF := 'C:\Relatorio CFOP Resumido.pdf';
+    end;
+
+    //Escolher Tipo de Relatório
+    case iTipoRelatorio of
+      0: begin      //Relatorio Resumido
+            //Buscar Resultados
+            with Modulo do
+            begin
+              //Consulta
+              qryRelatorioResumo.Close;
+              qryRelatorioResumo.SQL.Clear;
+              qryRelatorioResumo.SQL.Add('SELECT * FROM VENDAS');
+              qryRelatorioResumo.SQL.Add('where');
+              qryRelatorioResumo.SQL.Add('(DATA BETWEEN :ini AND :fim) AND');
+              qryRelatorioResumo.SQL.Add('(SITUACAO = ''F'')');
+              if cbStatus.Text <> 'TODOS' then
+              begin
+                qryRelatorioResumo.SQL.Add('and');
+                if cbStatus.Text = 'PENDENTE' then
+                begin
+                  qryRelatorioResumo.SQL.Add('(statusnf = :status) or (statusnf is null) or (statusnf = '''')');
+                end
+                else
+                begin
+                  qryRelatorioResumo.SQL.Add('(statusnf = :status) and (CHARACTER_LENGTH(num_protocolo) > 3)');
+                end;
+                qryRelatorioResumo.ParamByName('status').AsString := cbStatus.Text;
+              end;
+              qryRelatorioResumo.SQL.Add('order by data');
+              qryRelatorioResumo.ParamByName('ini').AsDate      := dtVIni.Date;
+              qryRelatorioResumo.ParamByName('fim').AsDate      := dtVFim.Date;
+              qryRelatorioResumo.Open();
+              //Chamar Relatorio
+              RelVendas.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Rel\VENDAS_RESUMO.fr3');
+              frxPDFExport.FileName := sCaminhoPDF;
+            end;
+         end;
+      1: begin //Relatorio COMPLETO
+            //Buscar Resultados
+            with Modulo do
+            begin
+              //Consulta Vendas
+              qryRelatorio.Close;
+              qryRelatorio.SQL.Clear;
+              qryRelatorio.SQL.Add('SELECT V.* FROM VENDAS V');
+              qryRelatorio.SQL.Add('WHERE');
+              qryRelatorio.SQL.Add('(V.DATA BETWEEN :ini AND :fim) AND');
+              qryRelatorio.SQL.Add('(V.SITUACAO = ''F'')');
+              if cbStatus.Text <> 'TODOS' then
+              begin
+                qryRelatorio.SQL.Add('and');
+                if cbStatus.Text = 'PENDENTE' then
+                begin
+                  qryRelatorio.SQL.Add('(V.statusnf = :status) or (V.statusnf is null) or (V.statusnf = '''')');
+                end
+                else
+                begin
+                  qryRelatorio.SQL.Add('(V.statusnf = :status) and (CHARACTER_LENGTH(num_protocolo) > 3)');
+                end;
+                qryRelatorio.ParamByName('status').AsString := cbStatus.Text;
+              end;
+              qryRelatorio.SQL.Add('order by data');
+              qryRelatorio.ParamByName('ini').AsDate      := dtVIni.Date;
+              qryRelatorio.ParamByName('fim').AsDate      := dtVFim.Date;
+              qryRelatorio.Open();
+              //Consulta Itens Vendas
+              qryRelatorioItens.Close;
+              qryRelatorioItens.SQL.Clear;
+              qryRelatorioItens.SQL.Add(
+              'select ' +
+              'I.venda VENDA,' +
+              'I.produto CODPRODUTO,' +
+              'I.descricao DESCRICAO,' +
+              'I.quantidade QUANTIDADE,' +
+              'I.valor VALORUND,' +
+              'I.total TOTAL,' +
+              'I.cst cstring,' +
+              'I.cfop CFOPPRODUTO,' +
+              'I.percentualicms PERCENTUALICMS,' +
+              'I.valoricms VALORICMSPRODUTO,' +
+              'I.valordesconto VALORDESCONTOPRODUTO ' +
+              'from ' +
+              'itensvendas I, produtos, classificacoesfiscais, itensclassificacoesfiscais, filiais ' +
+              'where ' +
+              '( ' +
+              'I.filial  =   filiais.codigo and ' +
+              'I.produto =   produtos.codigo and ' +
+              'produtos.classificacaofiscal    =   classificacoesfiscais.codigo and ' +
+              'produtos.classificacaofiscal    =   itensclassificacoesfiscais.classificacaofiscal ' +
+              ') ' +
+              'and ' +
+              '( ' +
+              'I.situacao = ''N'' and ' +
+              'itensclassificacoesfiscais.uf = filiais.uf and ' +
+              'I.cfop = itensclassificacoesfiscais.cfop and ' +
+              'I.cst = itensclassificacoesfiscais.cst and ' +
+              'itensclassificacoesfiscais.tipo = ''S'' ' +
+              ') '
+              );
+              qryRelatorioItens.Open();
+              //Chamar Relatorio
+              RelVendas.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Rel\VENDAS.fr3');
+              frxPDFExport.FileName := sCaminhoPDF;
+            end;
+          end;
+      2: begin  //Relatorio por CFOP
+            //Buscar Resultados
+            with Modulo do
+            begin
+              //Consulta
+              qryRelatorioCFOP.Close;
+              qryRelatorioCFOP.SQL.Clear;
+              qryRelatorioCFOP.SQL.Add('select sum(v.total) total,');
+              qryRelatorioCFOP.SQL.Add('v.data, v.cfop from itensvendas v');
+              qryRelatorioCFOP.SQL.Add('WHERE');
+              qryRelatorioCFOP.SQL.Add('(V.DATA BETWEEN :ini AND :fim) AND');
+              qryRelatorioCFOP.SQL.Add('((v.cfop = 5102) or (v.cfop = 5405)) and');
+              qryRelatorioCFOP.SQL.Add('(v.enviado_nf = ''S'')');
+              qryRelatorioCFOP.SQL.Add('group by v.data, v.cfop ');
+              qryRelatorioCFOP.SQL.Add('order by v.data');
+              qryRelatorioCFOP.ParamByName('ini').AsDate      := dtVIni.Date;
+              qryRelatorioCFOP.ParamByName('fim').AsDate      := dtVFim.Date;
+              qryRelatorioCFOP.Open();
+              //Chamar Relatorio
+              RelVendas.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Rel\VENDAS_CFOP.fr3');
+              frxPDFExport.FileName := sCaminhoPDF;
+            end;
+         end;
+      3: begin  //Relatorio por CFOP RESUMIDO
+            //Buscar Resultados
+            with Modulo do
+            begin
+              //Consulta
+              qryRelatorioCFOPResumido.Close;
+              qryRelatorioCFOPResumido.SQL.Clear;
+              qryRelatorioCFOPResumido.SQL.Add('select sum(v.total) total,');
+              qryRelatorioCFOPResumido.SQL.Add('v.cfop from itensvendas v');
+              qryRelatorioCFOPResumido.SQL.Add('WHERE');
+              qryRelatorioCFOPResumido.SQL.Add('(V.DATA BETWEEN :ini AND :fim) AND');
+              qryRelatorioCFOPResumido.SQL.Add('((v.cfop = 5102) or (v.cfop = 5405)) and');
+              qryRelatorioCFOPResumido.SQL.Add('(v.enviado_nf = ''S'')');
+              qryRelatorioCFOPResumido.SQL.Add('group by v.cfop ');
+              qryRelatorioCFOPResumido.ParamByName('ini').AsDate      := dtVIni.Date;
+              qryRelatorioCFOPResumido.ParamByName('fim').AsDate      := dtVFim.Date;
+              qryRelatorioCFOPResumido.Open();
+              //Chamar Relatorio
+              RelVendas.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Rel\VENDAS_CFOP_RESUMIDO.fr3');
+              frxPDFExport.FileName := sCaminhoPDF;
+            end;
+         end;
+    end;
+    //Gerar PDF
+    with Modulo do
+    begin
+      frxPDFExport.DefaultPath := 'C:\';
+      frxPDFExport.ShowDialog := False;
+      frxPDFExport.ShowProgress := False;
+      frxPDFExport.OverwritePrompt := False;
+      RelVendas.PrepareReport();
+      RelVendas.Export(frxPDFExport);
+    end;
+  end;
+begin
+  try
+    try
+      //Inicio Email
+      if edtEmailContabilidade.Text = '' then
+      begin
+        ShowMessage('Sem Email Preenchido!');
+        exit;
+      end;
+      //Pasta :=  FormatDateTime('yyyymm', StartOfTheMonth( IncMonth(Date, -1) ));
+      Pasta :=  FormatDateTime('yyyymm', now);
+      Caminho :=  Form1.ACBrNFe1.Configuracoes.Arquivos.PathNFe + '\' + 'ENVIADOS' + '\'+Pasta+'\';
+      //Consultar os XMLS na Pasta
+      if not DirectoryExists(Caminho) then begin
+        ShowMessage('Arquivos XMLs Nao Encontrados.');
+        exit;
+      end;
+      //Comecar a Parte de Compactacao
+      // Cria uma instância da classe TZipFile
+
+      //Exportar Relatório
+      ExportaPDF;
+
+      ZipFile := TZipFile.Create;
+
+      // Indica o diretório e nome do arquivo Zip que será criado
+      try
+        ZipFile.Open('C:\XMLs - '+ Pasta +'.zip', zmWrite);
+
+        try
+          try
+            Arquivos  :=  TStringList.Create;
+            Arquivos.Assign(GetFileList(Caminho + '*.xml'));
+
+            for I := 0 to Arquivos.Count -1 do begin
+              ZipFile.Add(Caminho+'\'+Arquivos.Strings[I]);
+            end;
+          except
+            on e: exception do
+              ShowMessage('Problema ao Compactar.'+#13+e.Message);
+          end;
+        finally
+          Arquivos.Free;
+        end;
+
+      finally
+        ZipFile.Free;
+      end;
+
+      if not FilesExists('C:\XMLs - '+ Pasta +'.zip') then begin
+        ShowMessage('Arquivo ZIP não encontrado no Diretório Abaixo:'+#13
+        +'C:\XMLs - '+ Pasta +'.zip');
+        Abort;
+      end else begin
+        //Enviar Email é Necessario as DLLs ssleay32.dll e libeay32.dll na Mesma Pasta do EXE
+        Para := edtEmailContabilidade.Text;
+
+        IdSSLIOHandlerSocket := TIdSSLIOHandlerSocketOpenSSL.Create(Self);
+        IdSMTP := TIdSMTP.Create(Self);
+        IdMessage := TIdMessage.Create(Self);
+
+        try
+          IdSSLIOHandlerSocket.SSLOptions.Method := sslvSSLv23;
+          IdSSLIOHandlerSocket.SSLOptions.Mode := sslmClient;
+
+          IdSMTP.IOHandler := IdSSLIOHandlerSocket;
+          IdSMTP.UseTLS := utUseExplicitTLS;
+          IdSMTP.AuthType := satDefault;
+          IdSMTP.Port := StrToInt(edtSmtpPort.Text);
+          IdSMTP.Host := edtSmtpHost.Text;
+          IdSMTP.Username := edtSmtpUser.Text;
+          IdSMTP.Password := edtSmtpPass.Text;
+
+          IdMessage.From.Address := edtSmtpUser.Text;
+          IdMessage.From.Name := 'Monitor NFCe';
+          IdMessage.ReplyTo.EMailAddresses := IdMessage.From.Address;
+          IdMessage.Recipients.Add.Text := Para;
+          //IdMessage.Recipients.Add.Text := 'destinatario2@email.com'; // opcional
+          //IdMessage.Recipients.Add.Text := 'destinatario3@email.com'; // opcional
+          IdMessage.Subject := edtEmailAssunto.Text;
+          IdMessage.Encoding := meMIME;
+
+          IdText := TIdText.Create(IdMessage.MessageParts);
+          IdText.Body.Assign(mmEmailMsg.Lines);
+          IdText.ContentType := 'text/plain; charset=iso-8859-1';
+
+          sAnexo := 'C:\XMLs - '+ Pasta +'.zip';
+
+          if FileExists(sAnexo) then
+          begin
+            TIdAttachmentFile.Create(IdMessage.MessageParts, sAnexo);
+          end;
+
+          sAnexo  :=  sCaminhoPDF;
+
+          if FileExists(sAnexo) then
+          begin
+            TIdAttachmentFile.Create(IdMessage.MessageParts, sAnexo);
+          end;
+
+          try
+            IdSMTP.Connect;
+            IdSMTP.Authenticate;
+          except
+            on E:Exception do
+            begin
+              MessageDlg('Erro na conexão ou autenticação: ' +
+                E.Message, mtWarning, [mbOK], 0);
+              Exit;
+            end;
+          end;
+
+          try
+            IdSMTP.Send(IdMessage);
+
+            IniFile := ChangeFileExt( Application.ExeName, '.ini') ;
+            Ini := TIniFile.Create( IniFile );
+            Ini.WriteString( 'AutoEmail','Enviado' ,'S');
+
+            ShowMessage('Mensagem enviada com sucesso!');
+          except
+            On E:Exception do
+            begin
+              MessageDlg('Erro ao enviar a mensagem: ' +
+                E.Message, mtWarning, [mbOK], 0);
+            end;
+          end;
+
+        finally
+          IdSMTP.Disconnect;
+          // liberação da DLL
+          UnLoadOpenSSLLibrary;
+          // liberação dos objetos da memória
+          FreeAndNil(IdMessage);
+          FreeAndNil(IdSSLIOHandlerSocket);
+          FreeAndNil(IdSMTP);
+        end;
+        DeleteFile('C:\XMLs - '+ Pasta +'.zip');
+        DeleteFile(sCaminhoPDF);
+      end;
+      //Fim Email
+    except
+      On E:Exception do
+      begin
+        MessageDlg('Erro: ' +
+          E.Message, mtWarning, [mbOK], 0);
+      end;
+    end;
+  finally
+    Ini.Free;
+  end;
+end;
+
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action  :=  caFree;
@@ -1143,7 +1499,9 @@ Var IniFile  : String ;
     Ok : Boolean;
     StreamMemo : TMemoryStream;
     Teste1, Teste2: TDateTime;
+    Enviado: string;
 begin
+  {$REGION 'TESTE'}
   //------------------------------------------------------------------------------------
   //Parte de sistema para teste                                                     ////
   //Teste1 :=  EncodeDateTime(2018,03,01,0,0,0,0);//Data 01/03/2018                   ////
@@ -1154,7 +1512,7 @@ begin
   //  Application.Terminate;                                                          ////
   //end;                                                                              ////
   //------------------------------------------------------------------------------------
-
+  {$ENDREGION}
   //Carregar Configurações do INI
   IniFile := ChangeFileExt( Application.ExeName, '.ini') ;
 
@@ -1332,6 +1690,9 @@ begin
     edtTimer.Text             :=  IntToStr(Ini.ReadInteger('Filtro', 'Tempo Automatico', 0) div 60000);
     TimerEnvio.Interval       :=  Ini.ReadInteger('Filtro', 'Tempo Automatico', 0);
     TimerEnvio.Enabled        :=  False;
+    edtEmailContabilidade.Text:=  Ini.ReadString( 'Filtro','Email Contabilidade' ,'');
+    edtEmail.Text             :=  Ini.ReadString( 'Filtro','Email Contabilidade' ,'');
+    cbRelContabilidade.ItemIndex  :=  Ini.ReadInteger('Filtro','Relatorio Contabilidade' , 0);
 
   finally
     Ini.Free;
@@ -1347,13 +1708,16 @@ begin
   //Atualizar Grid
   sbtnAtualizar.Click;
 
+  //Enviar XML
+  TimerAutoEnvio.Enabled  :=  False;
+  TimerAutoEnvioTimer(nil);
+
   //Iniciar minimizado
   if TimerMinimizar <> nil then
   begin
     //TimerMinimizarTimer(nil);
     TimerMinimizar.Enabled  :=  True;
   end;
-
 end;
 
 function TfrmPrincipal.GerarEAN13(Codigo: Integer): string;
@@ -1409,13 +1773,14 @@ procedure TfrmPrincipal.MostrarClick(Sender: TObject);
 begin
   try
     TrayIcon.Visible  :=  False;
-    Self.Show;
     Self.WindowState :=  wsNormal;
     Application.BringToFront;
+    Self.Show;
     //Parar o Timer
     TimerEnvio.Enabled  :=  False;
     //Refazer a Pesquisa
     sbtnAtualizar.Click;
+    TimerAutoEnvio.Enabled  :=  True;
   Except
     on E: exception do
     StatusBar.Panels[2].Text  :=  E.Message;
@@ -1913,6 +2278,15 @@ begin
     Ini.WriteInteger('Filtro', 'Tempo Automatico', StrToInt(edtTimer.Text)*60000);
     Ini.WriteInteger('Filtro', 'Mensagem de Retorno', rgMensagemRetorno.ItemIndex);
     Ini.WriteInteger('Filtro', 'Envio Automatico', Auto);
+    if Pos('@', edtEmailContabilidade.Text) > 0 then
+      Ini.WriteString( 'Filtro','Email Contabilidade' , edtEmailContabilidade.Text)
+    else
+      begin
+        ShowMessage('Digite um Email Valido!');
+        edtEmailContabilidade.SelectAll;
+        edtEmailContabilidade.SetFocus;
+      end;
+    Ini.WriteInteger('Filtro', 'Relatorio Contabilidade', cbRelContabilidade.ItemIndex);
   finally
     Ini.Free;
   end;
@@ -2293,7 +2667,59 @@ begin
             RelVendas.ShowReport();
           end;
        end;
+    3: begin  //Relatorio por CFOP RESUMIDO
+          //Buscar Resultados
+          with Modulo do
+          begin
+            //Consulta
+            qryRelatorioCFOPResumido.Close;
+            qryRelatorioCFOPResumido.SQL.Clear;
+            qryRelatorioCFOPResumido.SQL.Add('select sum(v.total) total,');
+            qryRelatorioCFOPResumido.SQL.Add('v.cfop from itensvendas v');
+            qryRelatorioCFOPResumido.SQL.Add('WHERE');
+            qryRelatorioCFOPResumido.SQL.Add('(V.DATA BETWEEN :ini AND :fim) AND');
+            qryRelatorioCFOPResumido.SQL.Add('((v.cfop = 5102) or (v.cfop = 5405)) and');
+            qryRelatorioCFOPResumido.SQL.Add('(v.enviado_nf = ''S'')');
+            qryRelatorioCFOPResumido.SQL.Add('group by v.cfop ');
+            qryRelatorioCFOPResumido.ParamByName('ini').AsDate      := dtVIni.Date;
+            qryRelatorioCFOPResumido.ParamByName('fim').AsDate      := dtVFim.Date;
+            qryRelatorioCFOPResumido.Open();
+            //Chamar Relatorio
+            RelVendas.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Rel\VENDAS_CFOP_RESUMIDO.fr3');
+            RelVendas.ShowReport();
+          end;
+       end;
   end;
+end;
+
+procedure TfrmPrincipal.TimerAutoEnvioTimer(Sender: TObject);
+Var IniFile : String ;
+    Ini     : TIniFile ;
+    Enviado : string;
+begin
+  //Auto Envio XML
+  TimerAutoEnvio.Enabled  :=  False;
+  IniFile := ChangeFileExt( Application.ExeName, '.ini') ;
+  Ini := TIniFile.Create( IniFile );
+  Enviado :=  Ini.ReadString( 'AutoEmail','Enviado' ,'N') ;
+
+  if (FormatDateTime('dd', Date) = '01') and (Enviado = 'N') then
+  begin
+    ShowMessage('Será enviado Email para Contabilidade'+#13+
+                'Por Favor Não Feche o Programa até a Conclusão do Envio!');
+    pnlAguarde.Visible  :=  True;
+    pnlAguarde.Refresh;
+
+    EnviarXMLAuto;
+  end
+  else if (FormatDateTime('dd', now) <> '01') then
+    Ini.WriteString( 'AutoEmail','Enviado' ,'N');
+
+  ini.Free;
+
+  pnlAguarde.Visible  :=  False;
+  pnlAguarde.Refresh;
+  //Fim - Auto Envio XML
 end;
 
 procedure TfrmPrincipal.TimerEnvioTimer(Sender: TObject);
@@ -2319,6 +2745,7 @@ begin
   TimerMinimizar.Enabled    :=  False;
   FreeAndNil(TimerMinimizar);
   ApplicationEventsMinimize(Self);
+  AutoEnvio := False;
 end;
 
 procedure TfrmPrincipal.tnPrincipalClick(Sender: TObject);
@@ -2360,13 +2787,14 @@ procedure TfrmPrincipal.TrayIconDblClick(Sender: TObject);
 begin
   try
     TrayIcon.Visible  :=  False;
-    Self.Show;
     Self.WindowState :=  wsNormal;
     Application.BringToFront;
+    Self.Show;
     //Parar o Timer
     TimerEnvio.Enabled  :=  False;
     //Refazer a Pesquisa
     sbtnAtualizar.Click;
+    TimerAutoEnvio.Enabled  :=  True;
   Except
     on E: exception do
     StatusBar.Panels[2].Text  :=  E.Message;

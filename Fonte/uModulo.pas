@@ -5,12 +5,12 @@ interface
 uses
   System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
-  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB, IniFiles,
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client,
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
   FireDAC.Comp.DataSet, ACBrBase, ACBrDFe, ACBrNFe, ACBrNFeDANFEFRDM,
   ACBrNFeDANFEClass, ACBrNFeDANFEFR, ACBrMail, Vcl.Dialogs, frxClass, frxDBSet,
-  FireDAC.Comp.UI;
+  FireDAC.Comp.UI, frxExportPDF;
 
 type
   TModulo = class(TDataModule)
@@ -39,12 +39,16 @@ type
     QEmpresa: TFDQuery;
     FDGUIxWaitCursor: TFDGUIxWaitCursor;
     DSEmpresa: TDataSource;
+    frxPDFExport: TfrxPDFExport;
+    qryRelatorioCFOPResumido: TFDQuery;
+    frxdbRelVendaCFOPResumido: TfrxDBDataset;
     procedure dsVendasDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
   public
     { Public declarations }
     iCaminhoRel: string;
+    function LerIni(Caminho, Sessao, Propriedade, ValorPadrao: string): string;
   end;
 
 var
@@ -77,7 +81,7 @@ begin
   qryVProdutos.SQL.Add('itensclassificacoesfiscais.itecf cfsituacaotributaria,');
   qryVProdutos.SQL.Add('itensclassificacoesfiscais.cst cfcst,');
   qryVProdutos.SQL.Add('itensclassificacoesfiscais.cfop cfcfop,');
-   qryVProdutos.SQL.Add('itensclassificacoesfiscais.tipo');
+  qryVProdutos.SQL.Add('itensclassificacoesfiscais.tipo');
   qryVProdutos.SQL.Add('from');
   qryVProdutos.SQL.Add('itensvendas, produtos, classificacoesfiscais, itensclassificacoesfiscais, filiais');
   qryVProdutos.SQL.Add('where');
@@ -100,6 +104,23 @@ begin
   qryVProdutos.ParamByName('venda').AsInteger :=  frmPrincipal.dbgVendas.Columns[0].Field.AsInteger; //Selecionando o Codigo da venda no Grid
   qryVProdutos.ParamByName('situacao').AsString :=  'N';
   qryVProdutos.Open();
+end;
+
+function TModulo.LerIni(Caminho, Sessao, Propriedade,
+  ValorPadrao: string): string;
+var
+  Ini: TIniFile;
+begin
+  try
+    Ini :=  TIniFile.Create(Caminho);
+    try
+      Result  :=  Ini.ReadString(Sessao, Propriedade, ValorPadrao);
+    except
+      Result  :=  '';
+    end;
+  finally
+    Ini.Free;
+  end;
 end;
 
 end.

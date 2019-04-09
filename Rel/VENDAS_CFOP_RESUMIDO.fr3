@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<TfrxReport Version="5.4.6" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Default" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="43214,3484613194" ReportOptions.Description.Text="" ReportOptions.LastChange="43564,0149278588" ScriptLanguage="PascalScript" ScriptText.Text="begin&#13;&#10;&#13;&#10;end.">
+  <Datasets>
+    <item DataSet="frxdbRelVendaCFOPResumido" DataSetName="frxdbRelVendaCFOPResumido"/>
+  </Datasets>
+  <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>
+  <TfrxReportPage Name="Page1" PaperWidth="210" PaperHeight="297" PaperSize="9" LeftMargin="10" RightMargin="10" TopMargin="10" BottomMargin="10" ColumnWidth="0" ColumnPositions.Text="" HGuides.Text="" VGuides.Text="">
+    <TfrxPageFooter Name="PageFooter1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="22,67718" Left="0" Top="427,08689" Width="718,1107">
+      <TfrxMemoView Name="Date" Left="552,25232" Top="0" Width="158,74026" Height="18,89765" DisplayFormat.FormatStr="dd 'de' mmmm 'de' yyyy" DisplayFormat.Kind="fkDateTime" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="[Date]"/>
+      <TfrxMemoView Name="TotalPages1" Left="7,55906" Top="0" Width="374,17347" Height="18,89765" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Página: [Page#] de [TotalPages#]"/>
+    </TfrxPageFooter>
+    <TfrxMasterData Name="MasterData1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="191,9765" Left="0" Top="113,3859" Width="718,1107" ColumnWidth="0" ColumnGap="0" DataSet="frxdbRelVendaCFOPResumido" DataSetName="frxdbRelVendaCFOPResumido" RowCount="0">
+      <TfrxMemoView Name="Memo1" Align="baWidth" Left="0" Top="0" Width="718,1107" Height="37,7953" Font.Charset="1" Font.Color="0" Font.Height="-24" Font.Name="Arial Black" Font.Style="1" Frame.Typ="15" Fill.BackColor="-16777216" HAlign="haCenter" ParentFont="False" Text="CFOP"/>
+      <TfrxMemoView Name="frxdbRelVendaCFOPResumidoCFOP" Align="baWidth" Left="0" Top="38,57483" Width="718,1107" Height="41,57483" DataSet="frxdbRelVendaCFOPResumido" DataSetName="frxdbRelVendaCFOPResumido" Font.Charset="1" Font.Color="0" Font.Height="-27" Font.Name="Arial Black" Font.Style="1" HAlign="haCenter" ParentFont="False" Text="[frxdbRelVendaCFOPResumido.&#34;CFOP&#34;]"/>
+      <TfrxMemoView Name="Memo2" Align="baWidth" Left="0" Top="88,92919" Width="718,1107" Height="34,01577" Font.Charset="1" Font.Color="0" Font.Height="-24" Font.Name="Arial Black" Font.Style="1" Frame.Typ="15" Fill.BackColor="-16777216" HAlign="haCenter" ParentFont="False" Text="TOTAL"/>
+      <TfrxMemoView Name="frxdbRelVendaCFOPResumidoTOTAL" Align="baWidth" Left="0" Top="123,28355" Width="718,1107" Height="45,35436" DataSet="frxdbRelVendaCFOPResumido" DataSetName="frxdbRelVendaCFOPResumido" DisplayFormat.FormatStr="%2.2m" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-27" Font.Name="Arial Black" Font.Style="1" HAlign="haCenter" ParentFont="False" Text="[frxdbRelVendaCFOPResumido.&#34;TOTAL&#34;]"/>
+      <TfrxShapeView Name="Shape1" Align="baWidth" Left="0" Top="170,07885" Width="718,1107" Height="11,33859" Fill.BackColor="0"/>
+    </TfrxMasterData>
+    <TfrxReportTitle Name="ReportTitle1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="34,01577" Left="0" Top="18,89765" Width="718,1107">
+      <TfrxMemoView Name="Memo7" Align="baClient" Left="0" Top="0" Width="718,1107" Height="34,01577" Font.Charset="0" Font.Color="0" Font.Height="-24" Font.Name="Arial Narrow" Font.Style="1" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="RELATÓRIO DE VENDAS"/>
+    </TfrxReportTitle>
+    <TfrxReportSummary Name="ReportSummary1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="37,7953" Left="0" Top="366,61441" Width="718,1107">
+      <TfrxMemoView Name="Memo8" Left="453,5436" Top="15,11812" Width="260,78757" Height="18,89765" DisplayFormat.FormatStr="%2.2m" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Total de Vendas = [SUM(&#60;frxdbRelVendaCFOPResumido.&#34;TOTAL&#34;&#62;,MasterData1)]"/>
+      <TfrxLineView Name="Line3" Align="baBottom" Left="0" Top="37,7953" Width="718,1107" Height="0" Color="0" Frame.Typ="4"/>
+      <TfrxLineView Name="Line4" Align="baWidth" Left="0" Top="11,3385900000001" Width="718,1107" Height="0" Color="0" Frame.Typ="4"/>
+    </TfrxReportSummary>
+  </TfrxReportPage>
+</TfrxReport>
