@@ -6,11 +6,7 @@ object Modulo: TModulo
     Params.Strings = (
       'User_Name=sysdba'
       'Password=masterkey'
-      
-        'Database=D:\NAO ABRA\NAO\Projetos\Projeto Monitor Dimas\Base PDV' +
-        '\PDV.FDB'
       'DriverID=FB')
-    Connected = True
     LoginPrompt = False
     Left = 32
     Top = 16
@@ -579,7 +575,6 @@ object Modulo: TModulo
     Top = 64
   end
   object qryRelatorioCFOPResumido: TFDQuery
-    Active = True
     Connection = ConexaoPDV
     SQL.Strings = (
       'select sum(v.total) total,'

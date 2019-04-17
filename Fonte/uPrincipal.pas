@@ -2703,7 +2703,7 @@ begin
   Ini := TIniFile.Create( IniFile );
   Enviado :=  Ini.ReadString( 'AutoEmail','Enviado' ,'N') ;
 
-  if (FormatDateTime('dd', Date) = '01') and (Enviado = 'N') then
+  if ( ((FormatDateTime('dd', Date) >= '01') and (FormatDateTime('dd', Date) <= '07')) and (Enviado = 'N') ) then
   begin
     ShowMessage('Será enviado Email para Contabilidade'+#13+
                 'Por Favor Não Feche o Programa até a Conclusão do Envio!');
@@ -2712,7 +2712,7 @@ begin
 
     EnviarXMLAuto;
   end
-  else if (FormatDateTime('dd', now) <> '01') then
+  else if not ((FormatDateTime('dd', Date) >= '01') and (FormatDateTime('dd', Date) <= '07')) then
     Ini.WriteString( 'AutoEmail','Enviado' ,'N');
 
   ini.Free;
